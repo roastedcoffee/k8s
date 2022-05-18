@@ -1,0 +1,283 @@
+
+Disable swap
+
+sudo swapoff -a
+
+Persist swap disable
+
+
+sudo swapon --show
+nano /etc/fstab
+sudo swapoff -a
+sudo rm /swap.img
+sudo swapon --show
+
+
+sudo sed -i '/swap / s/^\(.*\)$/#\1/g' /etc/fstab
+
+update prerequisite packages-
+
+sudo apt-get update && sudo apt-get install -y apt-transport-http curl
+
+Add kubernetes control plane tools repo and gpg key-
+
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+Add Kubernetes repo
+
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb http://apt.kubernetes.io. kubernetes-xenial main
+EOF
+
+Update repo and packages
+
+sudo apt-get update -y
+sudo apt-get install -y kubelet=1.22.0-00 kubeadm=1.22.0-00 kubectl=1.22.0-00
+
+Prevent auto upgrade of kubernetes control packages -
+
+sudo apt-mark hold kubelet kubeadm kubectl
+
+Verify kubernetes control packages are held-
+
+dpkg --get-selections | grep -v install
+
+OR
+
+apt-mark showhold
+
+Enable kubernetes networking - (https://kubernetes.io/docs/concepts/cluster-administration/networking/)
+
+sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.22.0
+
+
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes.admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+or
+
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+Verify kubernetes cluster status
+
+kubectl get nodes
+
+Enable calico networking
+
+kubectl apply -f https://docs.projectcalico.org/mainfests/calico.yaml
+
+or
+
+curl https://docs.projectcalico.org/manifests/calico-typha.yaml -o calico.yaml
+kubectl apply -f calico.yaml
+
+Print Worker node join command 
+
+kubeadm token create --print-join-command
+
+Execute Worker node join from worker node
+
+sudo kubeadm join <> --token <> --discovery-token-ca-cert-hash sha256:<>
+
+Example - 
+
+
+
+kubeadm join 10.0.1.101:6443 --token 3sb23o.qxal03nxoy1qk0gh \
+
+        --discovery-token-ca-cert-hash sha256:3e90a57b733c4c3b88226907834988696ac190547ca762a0c6b74291bc70f75e
+
+Assign Label -
+
+kubectl label nodes worker01 node-role.kubernetes.io/worker01=worker
+
+kubectl label nodes worker02 node-role.kubernetes.io/worker02=worker
+
+Display Cluster Info
+
+kubectl cluster-info 
+
+
+
+Install HELM
+
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+
+Install nginx-controller (Ingress)
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/baremetal/deploy.yaml
+
+
+Helm Commands - (Basic)
+
+helm install --dry-run --debug ./mychart --set service.internalPort=8080
+
+helm package ./mychart
+
+helm serve
+
+helm search local
+
+helm install <chart / folder name>
+
+helm delete --purge <chart name>
+
+helm delete <chart / folder name>
+
+kubectl exec <pods name> -- nginx -v
+
+helm upgrade --set scale=6,tag="1.19.4" <name of heml app> <folder / chart name>
+
+helm upgrade myweb <chart name>
+
+helm rollback myweb <rev number>
+
+helm status <>
+
+helm list
+
+helm rollback <name of app> 1
+
+helm delete <name of app>
+
+
+Helm Commands Local Repo - (Basic)
+
+helm package myweb
+
+ls -la
+
+helm serve --repo-path .
+
+helm serve --repo-path . --address "0.0.0.0 5000"
+
+
+helm repo list
+
+helm repo update
+
+helm repo add local <>
+
+helm search local /
+
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+
+------------------------------------
+touch Chart.yaml
+nano Chart.yaml
+
+
+apiVersion: v2
+name: myweb
+version: 1.0.0
+description: a_helm_chart_demo
+maintainers:
+  - name: Vinod
+Version: v2
+type: application
+
+
+touch values.yaml
+
+nano values.yaml
+
+scale: 3
+tag: 1.13.9
+
+cd templates/
+
+touch deployment.yaml
+nano deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
+touch service.yaml
+nano service.yaml
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - name: main
+      protocol: TCP
+      port: 80
+      targetPort: 80
+
+
+
+ingress.yaml
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx-example
+  rules:
+  - http:
+      paths:
+      - path: /testpath
+        pathType: Prefix
+        backend:
+          service:
+            name: test
+            port:
+              number: 80
+
+
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: ""
+
+
+  replicas: {{ .Values.replicaCount }}
+
+image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
