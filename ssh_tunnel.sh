@@ -8,3 +8,4 @@ ssh -f -N -L 10.32.56.31:9006:kworker03:22 k8suser@kworker03
 ssh -f -N -L 10.32.56.31:9007:kworker04:22 k8suser@kworker04
 ssh -f -N -L 10.32.56.31:9008:kloadbl01:22 k8suser@kloadbl01
 ssh -f -N -L 10.32.56.31:9009:kloadbl02:22 k8suser@kloadbl02
+ssh -f -N -L 10.32.56.31:9010:kworker02:32323 k8suser@kworker02
