@@ -1,0 +1,16 @@
+127.0.0.1	localhost
+10.32.56.31	k8splay
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+192.168.10.11	kmanager01	kmanager01.k8s.net
+192.168.10.12	kmanager02	kmanager02.k8s.net
+192.168.10.13	kmanager03	kmanager03.k8s.net
+192.168.10.21	kworker01	kworker01.k8s.net
+192.168.10.22	kworker02	kworker02.k8s.net
+192.168.10.23	kworker03	kworker03.k8s.net
+192.168.10.24	kworker04	kworker04.k8s.net
+192.168.10.101	kloadbl01	kloadbl01.k8s.net
+192.168.10.102	kloadbl02	kloadbl02.k8s.net
