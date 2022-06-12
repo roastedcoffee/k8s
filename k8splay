@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-12T15:08:43.281Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="C6kfpnhVmiAxHK75rEJ3" version="20.0.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-06-12T15:10:16.903Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36" etag="SIWhTr6rNu_sQwTFl1JV" version="20.0.0" type="github">
   <diagram id="fVrDD4XgjI84cCfa22kV" name="Page-1">
     <mxGraphModel dx="2574" dy="1435" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -166,11 +166,14 @@
         <mxCell id="qHaXOZuGeR4hJBZkg0KO-63" value="IP : 10.32.56.31&lt;br&gt;Ubuntu 20.04 LTS&lt;br&gt;Username k8suser&lt;br&gt;Password password" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" parent="1" vertex="1">
           <mxGeometry x="10" y="74" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="MsqLSkzQOjiwCjeg2umX-1" value="Text" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" vertex="1" parent="1">
-          <mxGeometry x="380" y="610" width="60" height="30" as="geometry" />
-        </mxCell>
         <mxCell id="MsqLSkzQOjiwCjeg2umX-2" value="vinodm@extrementworks.com" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" vertex="1" parent="1">
           <mxGeometry x="573" y="1130" width="234" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MsqLSkzQOjiwCjeg2umX-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" edge="1" parent="1" source="MsqLSkzQOjiwCjeg2umX-3" target="qHaXOZuGeR4hJBZkg0KO-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MsqLSkzQOjiwCjeg2umX-3" value="" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=user;fontFamily=Roboto Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto%2BMono;" vertex="1" parent="1">
+          <mxGeometry x="365" y="640" width="50" height="48" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
